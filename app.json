@@ -1,0 +1,12 @@
+{
+  "name": "seniorPresentation",
+  "displayName": "seniorPresentation",
+  "expo": {
+    "name": "seniorPresentation",
+    "slug": "seniorPresentation",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
