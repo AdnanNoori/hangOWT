@@ -1,31 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import RNLocation from 'react-native-location';
 
-const Map = ({ currentView, updateCurrentView }) => {
-
-  const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
-
-  useEffect(() => {
-    RNLocation.configure({
-      distanceFilter: 5.0
-    })
-
-    RNLocation.requestPermission({
-      ios: "whenInUse",
-      android: {
-        detail: "coarse"
-      }
-    }).then(granted => {
-        if (granted) {
-          this.locationSubscription = RNLocation.subscribeToLocationUpdates(locations => {
-            setUserLocation({latitude: locations[0].latitude, longitude: locations[0].longitude})
-            updateCurrentView(locations[0])
-          })
-        }
-      })
-  }, [])
+const Map = ({ currentView, userLocation }) => {
 
   return (
     <View style={styles.constainer}>
@@ -46,7 +24,6 @@ const Map = ({ currentView, updateCurrentView }) => {
           image={require('../marker.png')}
         >
         </Marker>
-        {console.log(userLocation)}
         <Marker
           coordinate={{ latitude : userLocation.latitude , longitude : userLocation.longitude }}
           title={'Hello'}
