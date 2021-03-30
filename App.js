@@ -7,10 +7,15 @@ import GooglePlacesInput from './client/GooglePlacesInput.js';
 import Map from './client/Map.js';
 
 export default function App() {
+  const [currentView, setCurrentView] = useState({latitude: 0, longitude: 0});
+
+  const updateCurrentView = (location) => {
+    setCurrentView({latitude: location.latitude, longitude: location.longitude});
+  }
 
   return (
     <View style={styles.constainer}>
-      <Map></Map>
+      <Map currentView={currentView} updateCurrentView={updateCurrentView}></Map>
       <GooglePlacesInput/>
     </View>
 
@@ -19,9 +24,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
   constainer: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  map: {
     ...StyleSheet.absoluteFillObject,
   },
 });
