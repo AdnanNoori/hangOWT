@@ -21,22 +21,22 @@ const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
       id: '2',
       title: 'Jessica',
     },
-    {
-      id: '3',
-      title: 'Carl',
-    },
-    {
-      id: '4',
-      title: 'Jasmine',
-    },
-    {
-      id: '5',
-      title: 'Fred',
-    },
-    {
-      id: '6',
-      title: 'Alex',
-    },
+    // {
+    //   id: '3',
+    //   title: 'Carl',
+    // },
+    // {
+    //   id: '4',
+    //   title: 'Jasmine',
+    // },
+    // {
+    //   id: '5',
+    //   title: 'Fred',
+    // },
+    // {
+    //   id: '6',
+    //   title: 'Alex',
+    // },
   ];
 
   return (
