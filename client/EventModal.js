@@ -1,36 +1,46 @@
 import React, { useState } from "react";
-import { FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions } from "react-native";
+import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions, ScrollView } from "react-native";
 // import DatePicker from './DatePicker.js';
 import DatePicker from 'react-native-date-picker';
+import FriendItem from './FriendItem.js'
+
+var screenSize = Dimensions.get('window');
 
 const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
 
   const [eventText, onChangeEventText] = React.useState("");
   const [date, setDate] = useState(new Date());
+  const [eventInviteList, setEventInviteList] = useState({});
 
   const DATA = [
     {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
+      id: '1',
+      title: 'Andy',
     },
     {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
+      id: '2',
+      title: 'Jessica',
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
+      id: '3',
+      title: 'Carl',
+    },
+    {
+      id: '4',
+      title: 'Jasmine',
+    },
+    {
+      id: '5',
+      title: 'Fred',
+    },
+    {
+      id: '6',
+      title: 'Alex',
     },
   ];
 
-  const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{item.title}</Text>
-    </View>
-  );
-
   return (
-    <View onPress={() => console.log('test')}>
+    <View>
       <Modal
         // animationType="slide"
         transparent={true}
@@ -58,19 +68,24 @@ const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
               date={date}
               onDateChange={setDate}
             />
-            <FlatList
-              data={DATA}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-            />
+            <ScrollView>
+              {
+                DATA.map((item) => {
+                  return <FriendItem
+                    eventInviteList={eventInviteList}
+                    setEventInviteList={setEventInviteList}
+                    key={item.id}
+                    item={item}
+                  />
+                })
+              }
+            </ScrollView>
           </View>
         </View>
       </Modal>
     </View>
   );
 }
-
-var screenSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -125,15 +140,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: screenSize.width * .7
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
+  // friend: {
+  //   backgroundColor: '#f9c2ff',
+  //   padding: 10,
+  //   marginVertical: 5,
+  //   marginHorizontal: 5,
+  //   flexDirection: 'row',
+  //   width: screenSize.width * .6,
+  //   height: screenSize.height * .06,
+  // },
+  // title: {
+  //   fontSize: 20,
+  // },
+  // selected : {
+  //   backgroundColor: '#f9c2ff',
+  //   padding: 10,
+  //   marginVertical: 5,
+  //   marginHorizontal: 5,
+  //   flexDirection: 'row',
+  //   width: screenSize.width * .6,
+  //   height: screenSize.height * .06,
+  //   borderStyle: 'dotted',
+  //   borderWidth: 1
+  // }
 });
 
 export default EventModal;
