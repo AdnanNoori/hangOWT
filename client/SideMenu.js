@@ -11,14 +11,10 @@ const SideMenu = (props) => {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      <DrawerItem
-        label="Close drawer"
-        onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}
-      />
-      <DrawerItem
-        label="Toggle drawer"
-        onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer())}
-      />
+      <Text>Friends</Text>
+      <Text>Events</Text>
+      <Text>Add Friend</Text>
+      <Text>Notifications</Text>
     </DrawerContentScrollView>
   );
 }
