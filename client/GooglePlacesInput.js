@@ -5,14 +5,14 @@ import { googleKey } from '../config.js';
 import Constants from 'expo-constants';
 import axios from 'axios';
 
-const GooglePlacesInput = ({currentView, updateCurrentView}) => {
+const GooglePlacesInput = ({ currentView, updateCurrentView, setPotentialEvent }) => {
   return (
     <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
         placeholder="Search"
         query={{
           key: googleKey,
-          language: 'en', // language of the results
+          language: 'en',
         }}
         onPress={(data, details = null) => {
           var location = data.description.split(' ').join('+')
@@ -20,6 +20,7 @@ const GooglePlacesInput = ({currentView, updateCurrentView}) => {
             .then((geoCode) => {
               let position = JSON.parse(geoCode.request["_response"]).features[0].geometry;
               updateCurrentView({longitude: position.coordinates[0], latitude: position.coordinates[1]})
+              setPotentialEvent(true);
             })
             .catch((err) => {
               console.log(err);
