@@ -1,71 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Dimensions } from 'react-native';
-import GooglePlacesInput from './client/GooglePlacesInput.js';
-import Map from './client/Map.js';
-import { getUserLocation } from './client/helperFunctions/helperFunctions.js';
+import * as React from 'react';
+import { View, Text, Button } from 'react-native';
+import { NavigationContainer, DrawerActions } from '@react-navigation/native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
-export default function App() {
+import { createStackNavigator } from '@react-navigation/stack';
 
-  const [currentView, setCurrentView] = useState({latitude: 0, longitude: 0});
+import HomeScreen from './client/HomeScreen.js';
+import SideMenu from './client/SideMenu.js';
 
-  const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
-
-  const [potentialEvent, setPotentialEvent] = useState(false)
-
-  const updateCurrentView = (location) => {
-    setCurrentView({latitude: location.latitude, longitude: location.longitude});
-  }
-
-  const resetView = () => {
-    setCurrentView({latitude: userLocation.latitude, longitude: userLocation.longitude});
-    setPotentialEvent(false);
-  }
-
-  useEffect(() => {
-    getUserLocation((locations) => {
-      setUserLocation({latitude: locations[0].latitude, longitude: locations[0].longitude})
-      updateCurrentView(locations[0]);
-    })
-  }, [])
-
-
+const Drawer = createDrawerNavigator();
+function MyDrawer() {
   return (
-    <View style={styles.constainer}>
-      <Map
-      potentialEvent={potentialEvent}
-      currentView={currentView}
-      userLocation={userLocation}/>
-      <View style={styles.searchInput}>
-        <GooglePlacesInput
-        currentView={currentView}
-        updateCurrentView={updateCurrentView}
-        setPotentialEvent={setPotentialEvent}
-        />
-      </View>
-      <View style={styles.resetButton}>
-        <Button
-          title='Reset'
-          onPress={resetView}
-        />
-      </View>
-    </View>
+    <Drawer.Navigator drawerContent={props => <SideMenu {...props} />}>
+      <Drawer.Screen name="Feed" component={HomeScreen} />
+    </Drawer.Navigator>
   );
-};
+}
 
-var width = Dimensions.get('window').width;
-
-const styles = StyleSheet.create({
-  constainer: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  resetButton: {
-    position: 'absolute',
-    right: 20,
-    top: 100
-  },
-  searchInput: {
-    position: 'absolute',
-    width: width
-  }
-});
+const Stack = createStackNavigator();
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Map" component={MyDrawer} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
