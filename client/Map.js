@@ -24,14 +24,14 @@ const Map = ({ currentView, userLocation, potentialEvent }) => {
           coordinate={{ latitude : 37.78525 , longitude : -122.4124 }}
           title={'Hello'}
           description={'World'}
-          image={require('../marker.png')}
+          image={require('../assets/marker.png')}
         >
         </Marker>
         <Marker
           coordinate={{ latitude : userLocation.latitude , longitude : userLocation.longitude }}
           title={'Hello'}
           description={'World'}
-          image={require('../marker.png')}
+          image={require('../assets/marker.png')}
         >
         </Marker>
         {
@@ -43,7 +43,7 @@ const Map = ({ currentView, userLocation, potentialEvent }) => {
             onPress={() => setEventModalVisible(true)}
           >
             <Image
-              source={require('../potentialEvent.png')}
+              source={require('../assets/potentialEvent.png')}
               style={{width: 30, height: 50}}
             />
           </Marker>
