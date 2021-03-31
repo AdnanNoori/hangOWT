@@ -6,13 +6,17 @@ import Map from './Map.js';
 import { getUserLocation } from './helperFunctions/helperFunctions.js';
 import { DrawerActions } from '@react-navigation/native';
 
-export default function App({navigation}) {
+export default function HomeScreen({navigation}) {
 
   const [currentView, setCurrentView] = useState({latitude: 0, longitude: 0});
 
   const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
 
-  const [potentialEvent, setPotentialEvent] = useState(false)
+  const [potentialEvent, setPotentialEvent] = useState(false);
+
+  const [potentialEventAddress, setPotentialEventAddress] = useState('');
+
+  const [eventList, setEventList] = useState([]);
 
   const updateCurrentView = (location) => {
     setCurrentView({latitude: location.latitude, longitude: location.longitude});
@@ -23,20 +27,27 @@ export default function App({navigation}) {
     setPotentialEvent(false);
   }
 
+  const addNewEvent = (newEvent) => {
+    eventList.push(newEvent);
+    setEventList(eventList);
+  }
+
+  console.log(eventList);
   useEffect(() => {
-    getUserLocation((locations) => {
-      setUserLocation({latitude: locations[0].latitude, longitude: locations[0].longitude})
-      updateCurrentView(locations[0]);
+    getUserLocation((location) => {
+      setUserLocation({latitude: location.coords.latitude, longitude: location.coords.longitude})
+      updateCurrentView({latitude: location.coords.latitude, longitude: location.coords.longitude});
     })
   }, [])
-
 
   return (
     <View style={styles.constainer}>
       <Map
-      potentialEvent={potentialEvent}
-      currentView={currentView}
-      userLocation={userLocation}
+        potentialEvent={potentialEvent}
+        currentView={currentView}
+        userLocation={userLocation}
+        potentialEventAddress={potentialEventAddress}
+        addNewEvent={addNewEvent}
       />
       <View style={styles.resetButton}>
         <Button
@@ -52,16 +63,17 @@ export default function App({navigation}) {
       </View>
       <View style={styles.searchInput}>
         <GooglePlacesInput
-        currentView={currentView}
-        updateCurrentView={updateCurrentView}
-        setPotentialEvent={setPotentialEvent}
+          currentView={currentView}
+          updateCurrentView={updateCurrentView}
+          setPotentialEvent={setPotentialEvent}
+          setPotentialEventAddress={setPotentialEventAddress}
         />
       </View>
     </View>
   );
 };
 
-var width = Dimensions.get('window').width;
+var screenSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   constainer: {
@@ -70,15 +82,15 @@ const styles = StyleSheet.create({
   resetButton: {
     position: 'absolute',
     right: 20,
-    top: 100
+    top: screenSize.height * .11
   },
   searchInput: {
     position: 'absolute',
-    width: width
+    width: screenSize.width
   },
   hambugerButton: {
     position: 'absolute',
     left: 20,
-    top: 100
+    top: screenSize.height * .11
   },
 });

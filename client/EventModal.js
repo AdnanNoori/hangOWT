@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions, ScrollView } from "react-native";
-// import DatePicker from './DatePicker.js';
+import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions, ScrollView, Button } from "react-native";
 import DatePicker from 'react-native-date-picker';
 import FriendItem from './FriendItem.js'
 
 var screenSize = Dimensions.get('window');
 
-const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
+const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAddress, addNewEvent }) => {
 
-  const [eventText, onChangeEventText] = React.useState("");
-  const [date, setDate] = useState(new Date());
+  const [eventTitle, onChangeEventTitle] = React.useState("");
+  const [eventDate, setEventDate] = useState(new Date());
   const [eventInviteList, setEventInviteList] = useState({});
 
   const DATA = [
@@ -60,13 +59,13 @@ const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
             </Pressable>
             <TextInput
               style={styles.input}
-              onChangeText={onChangeEventText}
+              onChangeText={onChangeEventTitle}
               placeholder="Event Title"
-              value={eventText}
+              value={eventTitle}
             />
             <DatePicker
-              date={date}
-              onDateChange={setDate}
+              date={eventDate}
+              onDateChange={setEventDate}
             />
             <ScrollView>
               {
@@ -80,6 +79,21 @@ const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
                 })
               }
             </ScrollView>
+            <Button title={'create'} onPress={() => {
+
+                addNewEvent({
+                  title: eventTitle,
+                  address: potentialEventAddress,
+                  inviteList: eventInviteList,
+                  date: eventDate,
+
+                })
+                setEventModalVisible(!eventModalVisible);
+                onChangeEventTitle('');
+                setEventDate(new Date());
+                setEventInviteList({});
+              }}
+            />
           </View>
         </View>
       </Modal>
@@ -140,29 +154,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: screenSize.width * .7
   },
-  // friend: {
-  //   backgroundColor: '#f9c2ff',
-  //   padding: 10,
-  //   marginVertical: 5,
-  //   marginHorizontal: 5,
-  //   flexDirection: 'row',
-  //   width: screenSize.width * .6,
-  //   height: screenSize.height * .06,
-  // },
-  // title: {
-  //   fontSize: 20,
-  // },
-  // selected : {
-  //   backgroundColor: '#f9c2ff',
-  //   padding: 10,
-  //   marginVertical: 5,
-  //   marginHorizontal: 5,
-  //   flexDirection: 'row',
-  //   width: screenSize.width * .6,
-  //   height: screenSize.height * .06,
-  //   borderStyle: 'dotted',
-  //   borderWidth: 1
-  // }
 });
 
 export default EventModal;

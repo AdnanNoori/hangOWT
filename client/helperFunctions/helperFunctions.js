@@ -1,23 +1,18 @@
-import RNLocation from 'react-native-location';
+import Geolocation from 'react-native-geolocation-service';
 
 module.exports = {
 
   getUserLocation : (callback) => {
-    RNLocation.configure({
-      distanceFilter: 5.0
-    })
+    Geolocation.getCurrentPosition(
+      (position) => {
+        callback(position)
+      },
+      (error) => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
 
-    RNLocation.requestPermission({
-      ios: "whenInUse",
-      android: {
-        detail: "coarse"
-      }
-    }).then(granted => {
-        if (granted) {
-          this.locationSubscription = RNLocation.subscribeToLocationUpdates(locations => {
-            callback(locations);
-          })
-        }
-      })
   }
 }

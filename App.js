@@ -12,6 +12,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from './client/HomeScreen.js';
 import SideMenu from './client/SideMenu.js';
+import LoginScreen from './client/LoginScreen.js';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
@@ -23,10 +24,22 @@ function MyDrawer() {
 }
 
 const Stack = createStackNavigator();
+
 export default function App() {
+
+  // const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
+
+  // const findUserLocation = () => {
+  //   getUserLocation((locations) => {
+  //     setUserLocation({latitude: locations[0].latitude, longitude: locations[0].longitude})
+  //     console.log('1');
+  //   })
+  // }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Map" component={MyDrawer} />
       </Stack.Navigator>
     </NavigationContainer>
