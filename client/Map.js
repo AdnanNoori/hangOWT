@@ -4,7 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import EventModal from './EventModal.js';
 import RNLocation from 'react-native-location';
 
-const Map = ({ currentView, userLocation, potentialEvent }) => {
+const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress, addNewEvent }) => {
 
   const [eventModalVisible, setEventModalVisible] = useState(false);
 
@@ -53,6 +53,8 @@ const Map = ({ currentView, userLocation, potentialEvent }) => {
       <EventModal
         eventModalVisible={eventModalVisible}
         setEventModalVisible={setEventModalVisible}
+        potentialEventAddress={potentialEventAddress}
+        addNewEvent={addNewEvent}
       />
     </View>
   );
