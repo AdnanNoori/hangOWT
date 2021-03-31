@@ -35,18 +35,19 @@ export default function App() {
       <Map
       potentialEvent={potentialEvent}
       currentView={currentView}
-      userLocation={userLocation}/>
+      userLocation={userLocation}
+      />
+      <View style={styles.resetButton}>
+        <Button
+          title='Reset'
+          onPress={resetView}
+        />
+      </View>
       <View style={styles.searchInput}>
         <GooglePlacesInput
         currentView={currentView}
         updateCurrentView={updateCurrentView}
         setPotentialEvent={setPotentialEvent}
-        />
-      </View>
-      <View style={styles.resetButton}>
-        <Button
-          title='Reset'
-          onPress={resetView}
         />
       </View>
     </View>
