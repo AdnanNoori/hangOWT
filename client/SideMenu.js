@@ -27,7 +27,10 @@ const SideMenu = (props) => {
                   source={require('../assets/defaultUser.png')}
                   style={{width: screenSize.width * .1, height: screenSize.height * .04, borderRadius: 50, marginRight: 20}}
                 ></Image>
-                <Text style={styles.title}>{item.title}</Text>
+                <View>
+                  <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+                  <Text>{ item.status}</Text>
+                </View>
               </View>
             )
           })

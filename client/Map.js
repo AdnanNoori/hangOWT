@@ -24,8 +24,6 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
           potentialEvent?
           <Marker
             coordinate={{ latitude : currentView.latitude , longitude: currentView.longitude }}
-            // title={'Event'}
-            // description={'Test'}
             onPress={() => setEventModalVisible(true)}
           >
             <Image
@@ -68,6 +66,8 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
               <Marker
                 key={friend.id}
                 coordinate={friend.coordinates}
+                title={friend.title}
+                description={friend.status}
               >
                 <Image
                   source={require('../assets/defaultUser.png')}
