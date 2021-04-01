@@ -11,6 +11,16 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
   const [eventDate, setEventDate] = useState(new Date());
   const [eventInviteList, setEventInviteList] = useState({});
 
+  updateEventList = (item) => {
+    if (eventInviteList[item.id]) {
+      delete eventInviteList[item.id];
+      setEventInviteList(eventInviteList);
+    } else {
+      eventInviteList[item.id] = item.title
+      setEventInviteList(eventInviteList);
+    }
+  }
+
   return (
     <View>
       <Modal
@@ -50,8 +60,7 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
               {
                 friendsList.map((item) => {
                   return <FriendItem
-                    eventInviteList={eventInviteList}
-                    setEventInviteList={setEventInviteList}
+                    updateEventList={updateEventList}
                     key={item.id}
                     item={item}
                   />
@@ -63,7 +72,7 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
                   title: eventTitle,
                   address: potentialEventAddress,
                   inviteList: eventInviteList,
-                  date: eventDate,
+                  date: eventDate.toString(),
                   coordinates: currentView
                 })
                 setEventModalVisible(!eventModalVisible);
