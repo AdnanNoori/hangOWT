@@ -19,7 +19,7 @@ function MyDrawer({friendsList, eventList, setEventList}) {
   return (
     <Drawer.Navigator drawerContent={props => <SideMenu {...props} friendsList={friendsList} eventList={eventList}/>}>
       <Drawer.Screen  name="Feed">
-        {props => <HomeScreen friendsList={friendsList} eventList={eventList} setEventList={setEventList}/>}
+        {props => <HomeScreen {...props} friendsList={friendsList} eventList={eventList} setEventList={setEventList}/>}
       </Drawer.Screen>
     </Drawer.Navigator>
   );
@@ -28,10 +28,9 @@ function MyDrawer({friendsList, eventList, setEventList}) {
 const Stack = createStackNavigator();
 
 export default function App() {
+
   const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
-
   const [friendsList, setFriendsList] = useState([]);
-
   const [eventList, setEventList] = useState([]);
 
   return (

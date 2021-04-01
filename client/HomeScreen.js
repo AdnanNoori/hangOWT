@@ -32,7 +32,6 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
     setEventList(eventList);
   }
 
-  console.log(eventList);
   useEffect(() => {
     getUserLocation((location) => {
       setUserLocation({latitude: location.coords.latitude, longitude: location.coords.longitude})
