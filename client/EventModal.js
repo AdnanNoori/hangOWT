@@ -53,7 +53,13 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
           <View style={styles.modalView}>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setEventModalVisible(!eventModalVisible)}
+              onPress={() => {
+                setEventModalVisible(!eventModalVisible)
+                onChangeEventTitle('');
+                setEventDate(new Date());
+                setEventInviteList({});
+                setPotentialEvent(false);
+              }}
             >
               <Text style={styles.textStyle}>X</Text>
             </Pressable>
