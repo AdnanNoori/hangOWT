@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions, ScrollView, Button } from "react-native";
 import DatePicker from 'react-native-date-picker';
-import FriendItem from './FriendItem.js'
+import FriendItem from './FriendItem.js';
 
 var screenSize = Dimensions.get('window');
 
