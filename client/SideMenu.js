@@ -10,42 +10,13 @@ import FriendItem from './FriendItem.js';
 
 var screenSize = Dimensions.get('window');
 
-
-const DATA = [
-  {
-    id: '1',
-    title: 'Andy',
-  },
-  {
-    id: '2',
-    title: 'Jessica',
-  },
-  {
-    id: '3',
-    title: 'Carl',
-  },
-  {
-    id: '4',
-    title: 'Jasmine',
-  },
-  {
-    id: '5',
-    title: 'Fred',
-  },
-  {
-    id: '6',
-    title: 'Alex',
-  },
-];
-
 const SideMenu = (props) => {
-
   return (
     <DrawerContentScrollView style={{padding: 10}} {...props}>
       <Text>Friends</Text>
       <ScrollView style={{height: 200}}>
         {
-          DATA.map((item) => {
+          props.friendsList.map((item) => {
             return (
               <View
                 style={ styles.friend }
