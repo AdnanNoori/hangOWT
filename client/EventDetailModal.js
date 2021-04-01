@@ -30,22 +30,25 @@ const EventDetailModal = ({eventDetailModal, setEventDetailModal, event}) => {
             <Text style={{margin: 5}}>{event.date}</Text>
             <Text style={{textDecorationLine: 'underline'}}>Location</Text>
             <Text style={{margin: 5}}>{event.address}</Text>
-            {
-              event.inviteList.map((item) => {
-                return (
-                  <View
-                    style={ styles.friend }
-                    key={item.id}
-                  >
-                    <Image
-                      source={require('../assets/defaultUser.png')}
-                      style={{width: screenSize.width * .1, height: screenSize.height * .04, borderRadius: 50, marginRight: 20}}
-                    ></Image>
-                    <Text style={styles.title}>{item.title}</Text>
-                  </View>
-                )
-              })
-            }
+            <Text style={{textDecorationLine: 'underline'}}>Invite List</Text>
+            <ScrollView>
+              {
+                Object.keys(event.inviteList).map((keyName) => {
+                  return (
+                    <View
+                      style={ styles.friend }
+                      key={keyName}
+                    >
+                      <Image
+                        source={require('../assets/defaultUser.png')}
+                        style={{width: screenSize.width * .1, height: screenSize.height * .04, borderRadius: 50, marginRight: 20}}
+                      ></Image>
+                      <Text style={styles.title}>{event.inviteList[keyName]}</Text>
+                    </View>
+                  )
+                })
+              }
+            </ScrollView>
           </View>
         </View>
 
