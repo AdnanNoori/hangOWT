@@ -6,7 +6,7 @@ import Map from './Map.js';
 import { getUserLocation } from './helperFunctions/helperFunctions.js';
 import { DrawerActions } from '@react-navigation/native';
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({navigation, friendsList, eventList, setEventList}) {
 
   const [currentView, setCurrentView] = useState({latitude: 0, longitude: 0});
 
@@ -16,7 +16,7 @@ export default function HomeScreen({navigation}) {
 
   const [potentialEventAddress, setPotentialEventAddress] = useState('');
 
-  const [eventList, setEventList] = useState([]);
+  // const [eventList, setEventList] = useState([]);
 
   const updateCurrentView = (location) => {
     setCurrentView({latitude: location.latitude, longitude: location.longitude});
@@ -47,7 +47,10 @@ export default function HomeScreen({navigation}) {
         currentView={currentView}
         userLocation={userLocation}
         potentialEventAddress={potentialEventAddress}
+        setPotentialEvent={setPotentialEvent}
         addNewEvent={addNewEvent}
+        eventList={eventList}
+        friendsList={friendsList}
       />
       <View style={styles.resetButton}>
         <Button
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
   resetButton: {
     position: 'absolute',
     right: 20,
-    top: screenSize.height * .11
+    top: screenSize.height * .08
   },
   searchInput: {
     position: 'absolute',
@@ -91,6 +94,6 @@ const styles = StyleSheet.create({
   hambugerButton: {
     position: 'absolute',
     left: 20,
-    top: screenSize.height * .11
+    top: screenSize.height * .08
   },
 });
