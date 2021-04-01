@@ -13,6 +13,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './client/HomeScreen.js';
 import SideMenu from './client/SideMenu.js';
 import LoginScreen from './client/LoginScreen.js';
+import axios from 'axios';
+import {localIP} from './config.js';
 
 const Drawer = createDrawerNavigator();
 function MyDrawer({friendsList, eventList, setEventList}) {
@@ -32,6 +34,17 @@ export default function App() {
   const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
   const [friendsList, setFriendsList] = useState([]);
   const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${localIP}/userData`)
+      .then((userData) => {
+        setEventList(userData.data.eventList)
+        setFriendsList(userData.data.friendsList)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, []);
 
   return (
     <NavigationContainer>
