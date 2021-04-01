@@ -7,6 +7,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import FriendItem from './FriendItem.js';
+import EventItem from './EventItem.js';
 
 var screenSize = Dimensions.get('window');
 
@@ -37,17 +38,7 @@ const SideMenu = (props) => {
         {
           props.eventList.map((event, index) => {
             return (
-              <View key={index}>
-                <Text style={{ fontWeight: 'bold' }} >
-                  {`Title: ${event.title}`}
-                </Text>
-                <Text>
-                  {`Address: ${event.address}`}
-                </Text>
-                <Text>
-                  {`Date/Time: ${event.date}`}
-                </Text>
-              </View>
+              <EventItem key={index} event={event}/>
             )
           })
         }
@@ -69,5 +60,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: screenSize.width * .6,
     height: screenSize.height * .06,
+  },
+  event: {
+    backgroundColor: '#f9c2ff',
+    padding: 10,
+    marginVertical: 5,
+    marginHorizontal: 5,
+    flexDirection: 'column',
+    width: screenSize.width * .6,
+    height: screenSize.height * .08,
   },
 });
