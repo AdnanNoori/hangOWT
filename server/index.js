@@ -52,7 +52,7 @@ var data = {
       address: "Fisherman's Wharf, San Francisco, CA, USA",
       coordinates: {latitude: 37.8091669, longitude: -122.4165994},
       date: '2021-04-10T19:00:10.000Z',
-      inviteList: {"2": "Jessica", "4": "Jasmine"},
+      inviteList: [{id: "2", title: "Jessica"}, {id:"4", title: "Jasmine"}],
       title: "Lets go hangout with seal"
     },
 
@@ -60,20 +60,20 @@ var data = {
       address: "The Pub, Ownes Stree, San Francisco, CA, USA",
       coordinates: {latitude: 37.7679911, longitude: -122.392759},
       date: '2021-04-10T19:00:10.000Z',
-      inviteList: {"4": "Jasmine", "6": "Alex", "1": "Andy"},
-      title: "Lets go hangout with seal"
+      inviteList: [{id: "4", title: "Jasmine"}, {id: "6", title: "Alex"}, {id: "1", title: "Andy"}],
+      title: "Lets go hangout with seals"
     },
 
     {
       address: "Clinton Park, San Francisco, CA, USA",
       coordinates: {latitude: 37.769338, longitude: -122.4214935},
       date: '2021-04-18T17:00:56.000Z',
-      inviteList: {"3": "Carl", "5": "Fred"},
+      inviteList: [{id: "3", title: "Carl"}, {id:"5", title: "Fred"}],
       title: "Let’s picnic"
     },
 
     {"address": "Legion of Honor, 34th Avenue, San Francisco, CA, USA", "coordinates": {"latitude": 37.78455795, "longitude": -122.50095497618373}, "date": "2021-04-10T19:00:58.000Z",
-    inviteList: {"3": "Carl", "5": "Fred"},
+    inviteList: [{id:"3", title: "Carl"}, {id:"5", title: "Fred"}],
     "title": "Let’s checkout the museum"}
   ]
 }

@@ -5,6 +5,8 @@ import GooglePlacesInput from './GooglePlacesInput.js';
 import Map from './Map.js';
 import { getUserLocation } from './helperFunctions/helperFunctions.js';
 import { DrawerActions } from '@react-navigation/native';
+import { Icon } from 'react-native-elements';
+
 
 export default function HomeScreen({navigation, friendsList, eventList, setEventList}) {
 
@@ -52,16 +54,29 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         friendsList={friendsList}
       />
       <View style={styles.resetButton}>
-        <Button
-          title='Reset'
+
+        <Icon
+          name='navigation'
+          reverse={true}
+          size={18}
           onPress={resetView}
         />
+        {/* <Button
+          title='Reset'
+          onPress={resetView}
+        /> */}
       </View>
       <View style={styles.hambugerButton}>
-        <Button
-          title="Open drawer"
+        <Icon
+          name='menu'
+          reverse={true}
+          size={18}
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
         />
+        {/* <Button
+          title="Open drawer"
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        /> */}
       </View>
       <View style={styles.searchInput}>
         <GooglePlacesInput
