@@ -5,7 +5,7 @@ import FriendItem from './FriendItem.js'
 
 var screenSize = Dimensions.get('window');
 
-const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAddress, addNewEvent }) => {
+const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAddress, addNewEvent, setPotentialEvent, currentView }) => {
 
   const [eventTitle, onChangeEventTitle] = React.useState("");
   const [eventDate, setEventDate] = useState(new Date());
@@ -80,18 +80,18 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
               }
             </ScrollView>
             <Button title={'create'} onPress={() => {
-
                 addNewEvent({
                   title: eventTitle,
                   address: potentialEventAddress,
                   inviteList: eventInviteList,
                   date: eventDate,
-
+                  coordinates: currentView
                 })
                 setEventModalVisible(!eventModalVisible);
                 onChangeEventTitle('');
                 setEventDate(new Date());
                 setEventInviteList({});
+                setPotentialEvent(false);
               }}
             />
           </View>
