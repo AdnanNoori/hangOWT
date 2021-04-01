@@ -3,27 +3,15 @@ import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextI
 
 var screenSize = Dimensions.get('window');
 
-const FriendItem = ({item, eventInviteList, setEventInviteList}) => {
+const FriendItem = ({item, updateEventList}) => {
 
   const [friendSelected, setFriendSelected] = useState(false);
-
-  updateEventList = () => {
-    if (eventInviteList[item.id]) {
-      console.log(item.title);
-      delete eventInviteList[item.id];
-      setEventInviteList(eventInviteList);
-    } else {
-      console.log(item.title);
-      eventInviteList[item.id] = item.title
-      setEventInviteList(eventInviteList);
-    }
-  }
 
   return(
     <Pressable
     onPress={() => {
       setFriendSelected(!friendSelected)
-      updateEventList()
+      updateEventList(item)
     }}
   >
     <View
