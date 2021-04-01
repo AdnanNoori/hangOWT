@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
   searchContainer: {
     flex: 1,
     padding: 10,
-    paddingTop: Constants.statusBarHeight + 10,
+    paddingTop: Constants.statusBarHeight - 20,
   },
 });
