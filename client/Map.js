@@ -20,20 +20,6 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
           longitudeDelta: 0.0121,
         }}
       >
-        <Marker
-          coordinate={{ latitude : 37.78525 , longitude : -122.4124 }}
-          title={'Hello'}
-          description={'World'}
-          image={require('../assets/marker.png')}
-        >
-        </Marker>
-        <Marker
-          coordinate={{ latitude : userLocation.latitude , longitude : userLocation.longitude }}
-          title={'Hello'}
-          description={'World'}
-          image={require('../assets/marker.png')}
-        >
-        </Marker>
         {
           potentialEvent?
           <Marker
@@ -55,10 +41,6 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
               <Marker
                 key={index}
                 coordinate={event.coordinates}
-                title={`${event.date}`}
-                description={
-                  `Address: ${event.address}`
-                }
               >
                 <Image
                   source={require('../assets/eventMarker.png')}
@@ -79,6 +61,33 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
             )
           })
         }
+
+        {
+          friendsList.map((friend) => {
+            return (
+              <Marker
+                key={friend.id}
+                coordinate={friend.coordinates}
+              >
+                <Image
+                  source={require('../assets/defaultUser.png')}
+                  style={{width: 35, height: 35, borderRadius: 50, borderColor: 'black', borderWidth: 2}}
+                />
+                {/* <Callout style={{width: screenSize.width * .6}}>
+                  <Text style={{ fontWeight: 'bold' }} >
+                    {`Title: ${event.title}`}
+                  </Text>
+                  <Text>
+                    {`Address: ${event.address}`}
+                  </Text>
+                  <Text>
+                    {`Date/Time: ${event.date}`}
+                  </Text>
+                </Callout> */}
+              </Marker>
+            )
+          })
+        }
       </MapView>
       <EventModal
         eventModalVisible={eventModalVisible}
@@ -87,6 +96,7 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
         addNewEvent={addNewEvent}
         setPotentialEvent={setPotentialEvent}
         currentView={currentView}
+        friendsList={friendsList}
       />
     </View>
   );
