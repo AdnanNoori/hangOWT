@@ -1,16 +1,25 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-
+const { register, login, createEvent, updateStatus, updateLocation } = require('../database/model/queryFunctions.js');
 
 app.get('/userData', (req,res) => {
   res.send(data)
 });
 
+app.post('/register', register);
+
+app.get('/login', login);
+
+app.post('/createEvent', createEvent);
+
+app.post('/updateStatus', updateStatus);
+
+app.post('/updateLocation', updateLocation);
+
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 });
-
 
 var data = {
   friendsList: [
