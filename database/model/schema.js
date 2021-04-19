@@ -1,20 +1,22 @@
-const { Schema } = mongoose;
+const { mongoose } = require('../index.js');
 
-module.exports = {
-  userSchema: new Schema({
-    username: String,
-    password: String,
-    location: Object,
-    status: String,
-    events: Array,
-    friends: Array
-  }),
+const userSchema = mongoose.Schema({
+  username: String,
+  password: String,
+  location: Object,
+  status: String,
+  events: {type: Array, default: []},
+  friends: {type: Array, default: []}
+});
 
-  eventsSchema: new Schema({
-    location: Object,
-    address: String,
-    date: Date,
-    title: String,
-    inviteList: Array
-  })
-}
+const eventsSchema = mongoose.Schema({
+  location: Object,
+  address: String,
+  date: Date,
+  title: String,
+  inviteList: Array
+});
+
+
+module.exports.User = mongoose.model('User', userSchema);
+module.exports.Event = mongoose.model('Event', eventsSchema);
