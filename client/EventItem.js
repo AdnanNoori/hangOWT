@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     flexDirection: 'column',
     width: screenSize.width * .6,
-    height: screenSize.height * .08,
+    // height: screenSize.height * .08,
   },
 });
