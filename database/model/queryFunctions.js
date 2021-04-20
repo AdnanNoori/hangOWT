@@ -33,7 +33,7 @@ module.exports = {
       });
 
       const friendsPromises = userInfo.events.map((friend) => {
-        return User.findOne({ _id: friend })
+        return User.findOne({ friend.username })
           .select({ password: 0, friends: 0, events: 0, friendRequests: 0, friendsPending: 0 });
       });
 
@@ -57,11 +57,11 @@ module.exports = {
 
     try {
 
-      var eventId = mongoose.Types.ObjectId();
-      await Event.create({ _id: eventId, location, address, date, title, inviteList });
+      var eventID = mongoose.Types.ObjectId();
+      await Event.create({ _id: eventID, location, address, date, title, inviteList });
 
       const friendInvitePromises = inviteList.map((friend) => {
-        return User.update({ _id: friend._id }, { $push: { events: eventId } });
+        return User.update({ username: friend.username }, { $push: { events: eventId } });
       })
 
       Promises.all(friendInvitePromises)
@@ -76,11 +76,11 @@ module.exports = {
   },
 
   updateStatus: async (req, res) => {
-    const { userID, status } = req.body;
+    const { username, status } = req.body;
 
     try {
 
-      await User.updateOne({ _id: userId }, { status });
+      await User.updateOne({ username }, { status });
       res.sendStatus(200);
 
     } catch(err) {
@@ -90,11 +90,11 @@ module.exports = {
   },
 
   updateLocation: async (req, res) => {
-    const { userID, location } = req.body;
+    const { username, location } = req.body;
 
     try {
 
-      await User.updateOne({ _id: userID }, { location });
+      await User.updateOne({ username }, { location });
       res.sendStatus(200)
 
     } catch(err) {
