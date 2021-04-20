@@ -60,15 +60,32 @@ module.exports = {
       await Event.create({ _id: eventId, location, address, date, title, inviteList });
 
       const friendInvitePromises = inviteList.map((friend) => {
-        User.update({ _id: friend._id }, { $push: { events: eventId } });
+        return User.update({ _id: friend._id }, { $push: { events: eventId } });
       })
+
+      Promises.all(friendInvitePromises)
+        .then(() => {
+          res.sendStatus(200);
+        })
+
     } catch(err) {
       console.log(err);
+      res.sendStatus(404)
     }
   },
 
   updateStatus: (req, res) => {
+    const { userID, status } = req.body;
 
+    try {
+
+      await User.updateOne({_id: userId}, { status });
+      res.send(200);
+
+    } catch(err) {
+      console.log(err);
+      res.sendStatus(404);
+    }
   },
 
   updateLocation: (req, res) => {
