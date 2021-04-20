@@ -31,10 +31,23 @@ module.exports = {
       const eventsPromises = userInfo.events.map((event) => {
         return Event.findOne({ _id: event })
       });
+      const friendList = [];
+      const requestedFriendsList = [];
+      const pendingFriendsList = [];
 
-      const friendsPromises = userInfo.events.map((friend) => {
+      Object.key(userInfo.friends).forEach((friend) => {
+        if (userInfo.friends[friend] === 0) {
+          pendingFriendsList.push(friend);
+        } else if (userInfo.friends[friend] === 1) {
+          requestedFriendsList.push(friend);
+        } else if (userInfo.friends[friend] === 2) {
+          friendList.push(friend);
+        }
+      });
+
+      const friendsPromises = friendList.map((friend) => {
         return User.findOne({ friend.username })
-          .select({ password: 0, friends: 0, events: 0, friendRequests: 0, friendsPending: 0 });
+          .select({ password: 0, friends: 0, events: 0});
       });
 
       Promise.all(eventsPromises)
@@ -43,7 +56,7 @@ module.exports = {
             .then((friends) => {
               userInfo.events = events;
               userInfo.friends = friends;
-              res.status(200).send(userInfo);
+              res.status(200).send({ ...userInfo, requestedFriendsList, pendingFriendsList });
             })
         })
 
@@ -108,8 +121,8 @@ module.exports = {
 
     try {
 
-      await User.updateOne({ username }, { $push: { friendsPending: requestFriendUserName } });
-      await User.updateOne({ username: requestFriendUserName }, { $push: { friendRequests: username } })
+      await User.updateOne({ username }, { $set: { `friendsPending.${requestFriendUserName}`: 1 } });
+      await User.updateOne({ username: requestFriendUserName }, { $set: { `friendsPending.${username}`: 0 } })
 
     } catch(err) {
       console.log(err);
@@ -122,8 +135,8 @@ module.exports = {
 
     try {
 
-      await User.updateOne({ username }, { $set : {`friends.${requestFriendUserName}`: 1 } })
-      await User.updateOne({ username: requestFriendUserName }, { $set : {`friends.${username}`: 1 } })
+      await User.updateOne({ username }, { $set : {`friends.${requestFriendUserName}`: 2 } })
+      await User.updateOne({ username: requestFriendUserName }, { $set : {`friends.${username}`: 2 } })
     }
   }
 
