@@ -51,8 +51,20 @@ module.exports = {
     }
   },
 
-  createEvent: (req, res) => {
+  createEvent: async (req, res) => {
+    const { location, address, date, title, inviteList } = req.body;
 
+    try {
+
+      var eventId = mongoose.Types.ObjectId();
+      await Event.create({ _id: eventId, location, address, date, title, inviteList });
+
+      const friendInvitePromises = inviteList.map((friend) => {
+        User.update({ _id: friend._id }, { $push: { events: eventId } });
+      })
+    } catch(err) {
+      console.log(err);
+    }
   },
 
   updateStatus: (req, res) => {
