@@ -74,13 +74,13 @@ module.exports = {
     }
   },
 
-  updateStatus: (req, res) => {
+  updateStatus: async (req, res) => {
     const { userID, status } = req.body;
 
     try {
 
-      await User.updateOne({_id: userId}, { status });
-      res.send(200);
+      await User.updateOne({ _id: userId }, { status });
+      res.sendStatus(200);
 
     } catch(err) {
       console.log(err);
@@ -88,8 +88,20 @@ module.exports = {
     }
   },
 
-  updateLocation: (req, res) => {
+  updateLocation: async (req, res) => {
+    const { userID, location } = req.body;
 
-  }
+    try {
+
+      await User.updateOne({ _id: userID }, { location });
+      res.sendStatus(200)
+
+    } catch(err) {
+      console.log(err);
+      res.sendStatus(404);
+    }
+  },
+
+
 
 }
