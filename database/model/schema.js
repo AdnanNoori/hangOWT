@@ -5,8 +5,10 @@ const userSchema = mongoose.Schema({
   password: String,
   location: Object,
   status: String,
-  events: {type: Array, default: []},
-  friends: {type: Array, default: []}
+  events: {type: Object, default: []},
+  friends: {type: Object, default: {}},
+  friendRequests: {type: Object, default: {}},
+  friendsPending: {type: Object, default: {}},
 });
 
 const eventsSchema = mongoose.Schema({
