@@ -17,6 +17,5 @@ const eventsSchema = mongoose.Schema({
   inviteList: Array
 });
 
-
 module.exports.User = mongoose.model('User', userSchema);
 module.exports.Event = mongoose.model('Event', eventsSchema);
