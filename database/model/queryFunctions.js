@@ -23,6 +23,7 @@ module.exports = {
 
   login: async (req, res) => {
     const { username, password } = req.params;
+
     try {
       const userInfo = await User.findOne({ username, password })
         .select({ password: 0 });
@@ -33,7 +34,7 @@ module.exports = {
 
       const friendsPromises = userInfo.events.map((friend) => {
         return User.findOne({ _id: friend })
-          .select({ password: 0, friends: 0, events: 0 });
+          .select({ password: 0, friends: 0, events: 0, friendRequests: 0, friendsPending: 0 });
       });
 
       Promise.all(eventsPromises)
@@ -102,6 +103,18 @@ module.exports = {
     }
   },
 
+  requestFriend: async (req, res) => {
+    const { username, requestFriendUserName } = req.body;
 
+    try {
+
+      await User.updateOne({ username }, { $push: { friendsPending: requestFriendUserName } });
+      await User.updateOne({ username: requestFriendUserName }, { $push: { friendRequests: username } })
+
+    } catch(err) {
+      console.log(err);
+      res.sendStatus(404);
+    }
+  }
 
 }
