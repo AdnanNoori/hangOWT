@@ -115,6 +115,16 @@ module.exports = {
       console.log(err);
       res.sendStatus(404);
     }
+  },
+
+  acceptFriend: async (req, res) => {
+    const { username, requestFriendUserName } = req.body;
+
+    try {
+
+      await User.updateOne({ username }, { $set : {`friends.${requestFriendUserName}`: 1 } })
+      await User.updateOne({ username: requestFriendUserName }, { $set : {`friends.${username}`: 1 } })
+    }
   }
 
 }
