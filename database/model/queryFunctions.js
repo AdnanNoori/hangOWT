@@ -4,14 +4,14 @@ const { User, Event } = require('./schema.js');
 module.exports = {
 
   register: async (req, res) => {
+    const { username, password } = req.body;
 
     try {
-      const userExists = await User.exists({ username: req.body.username });
+      const userExists = await User.exists({ username });
 
       if (userExists) {
         res.send(409);
       } else {
-        const { username, password } = req.body;
         await User.create({ username, password });
         res.sendStatus(201)
       }
@@ -22,11 +22,12 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    const { username, password } = req.params;
+    const { username, password } = req.query;
 
     try {
-      const userInfo = await User.findOne({ username, password })
-        .select({ password: 0 });
+      const userInfo = await User.findOne({ username })
+        .select({ password: 0 })
+        .lean();
 
       const eventsPromises = userInfo.events.map((event) => {
         return Event.findOne({ _id: event })
@@ -35,7 +36,7 @@ module.exports = {
       const requestedFriendsList = [];
       const pendingFriendsList = [];
 
-      Object.key(userInfo.friends).forEach((friend) => {
+      Object.keys(userInfo.friends).forEach((friend) => {
         if (userInfo.friends[friend] === 0) {
           pendingFriendsList.push(friend);
         } else if (userInfo.friends[friend] === 1) {
@@ -46,7 +47,7 @@ module.exports = {
       });
 
       const friendsPromises = friendList.map((friend) => {
-        return User.findOne({ friend.username })
+        return User.findOne({ username: friend })
           .select({ password: 0, friends: 0, events: 0});
       });
 
@@ -61,6 +62,7 @@ module.exports = {
         })
 
     } catch(err) {
+      console.log(err);
       res.sendStatus(401);
     }
   },
@@ -121,8 +123,16 @@ module.exports = {
 
     try {
 
-      await User.updateOne({ username }, { $set: { `friendsPending.${requestFriendUserName}`: 1 } });
-      await User.updateOne({ username: requestFriendUserName }, { $set: { `friendsPending.${username}`: 0 } })
+      let userData = await User.findOne({ username })
+      userData.friends[requestFriendUserName] = 1;
+      userData.markModified('friends');
+      await userData.save();
+
+      let friendData = await User.findOne({ username: requestFriendUserName })
+      friendData.friends[username] = 0;
+      friendData.markModified('friends');
+      await friendData.save();
+      res.sendStatus(200);
 
     } catch(err) {
       console.log(err);
@@ -132,18 +142,30 @@ module.exports = {
 
   acceptFriend: async (req, res) => {
     const { username, requestFriendUserName } = req.body;
-
+    console.log(username)
     try {
+      let userData = await User.findOne({ username })
+      userData.friends[requestFriendUserName] = 2;
+      userData.markModified('friends');
+      await userData.save();
 
-      await User.updateOne({ username }, { $set : {`friends.${requestFriendUserName}`: 2 } })
-      await User.updateOne({ username: requestFriendUserName }, { $set : {`friends.${username}`: 2 } })
+
+      let friendData = await User.findOne({ username: requestFriendUserName })
+      friendData.friends[username] = 2;
+      friendData.markModified('friends');
+      await friendData.save();
+      res.sendStatus(200);
+
+    } catch(err) {
+      console.log(err);
+      res.sendStatus(404);
     }
   },
 
 
   rejectFriend: async (req, res) => {
     const { username, requestFriendUserName } = req.body;
-
+    console.log(username)
     try {
 
       let userData = await User.findOne({ username })
@@ -155,7 +177,11 @@ module.exports = {
       delete friendData.friends[username];
       friendData.markModified('friends');
       await friendData.save();
+      res.sendStatus(200);
 
+    } catch(err) {
+      console.log(err);
+      res.sendStatus(404);
     }
   }
 
