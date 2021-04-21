@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { register, login, createEvent, updateStatus, updateLocation } = require('../database/model/queryFunctions.js');
+const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend } = require('../database/model/queryFunctions.js');
 
 app.get('/userData', (req,res) => {
   res.send(data)
@@ -16,6 +16,14 @@ app.post('/createEvent', createEvent);
 app.post('/updateStatus', updateStatus);
 
 app.post('/updateLocation', updateLocation);
+
+app.post('/requestFriend', requestFriend);
+
+app.post('/acceptFriend', acceptFriend);
+
+app.post('/rejectFriend', rejectFriend);
+
+
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
