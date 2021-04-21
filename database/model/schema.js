@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
   location: Object,
   status: String,
   events: {type: Array, default: []},
-  friends: {type: Array, default: []}
+  friends: {type: Object, default: {}} //0 pending, 1 requested, 2 accepted
 });
 
 const eventsSchema = mongoose.Schema({
