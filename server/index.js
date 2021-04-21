@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend } = require('../database/model/queryFunctions.js');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/userData', (req,res) => {
   res.send(data)
@@ -13,17 +19,15 @@ app.get('/login', login);
 
 app.post('/createEvent', createEvent);
 
-app.post('/updateStatus', updateStatus);
+app.put('/updateStatus', updateStatus);
 
-app.post('/updateLocation', updateLocation);
+app.put('/updateLocation', updateLocation);
 
 app.post('/requestFriend', requestFriend);
 
-app.post('/acceptFriend', acceptFriend);
+app.put('/acceptFriend', acceptFriend);
 
-app.post('/rejectFriend', rejectFriend);
-
-
+app.delete('/rejectFriend', rejectFriend);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
