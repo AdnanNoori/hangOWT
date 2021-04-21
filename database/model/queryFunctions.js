@@ -138,6 +138,25 @@ module.exports = {
       await User.updateOne({ username }, { $set : {`friends.${requestFriendUserName}`: 2 } })
       await User.updateOne({ username: requestFriendUserName }, { $set : {`friends.${username}`: 2 } })
     }
+  },
+
+
+  rejectFriend: async (req, res) => {
+    const { username, requestFriendUserName } = req.body;
+
+    try {
+
+      let userData = await User.findOne({ username })
+      delete userData.friends[requestFriendUserName];
+      userData.markModified('friends');
+      await userData.save();
+
+      let friendData = await User.findOne({ username: requestFriendUserName })
+      delete friendData.friends[username];
+      friendData.markModified('friends');
+      await friendData.save();
+
+    }
   }
 
 }
