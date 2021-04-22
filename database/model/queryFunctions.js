@@ -57,6 +57,7 @@ module.exports = {
             .then((friends) => {
               userInfo.events = events;
               userInfo.friends = friends;
+              console.log({ ...userInfo, requestedFriendsList, pendingFriendsList })
               res.status(200).send({ ...userInfo, requestedFriendsList, pendingFriendsList });
             })
         })

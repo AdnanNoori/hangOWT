@@ -18,11 +18,12 @@ import axios from 'axios';
 import {localIP} from './config.js';
 
 const Drawer = createDrawerNavigator();
-function MyDrawer({friendsList, eventList, setEventList}) {
+
+function MyDrawer({friendsList, eventList, setEventList, userData}) {
   return (
-    <Drawer.Navigator drawerContent={props => <SideMenu {...props} friendsList={friendsList} eventList={eventList}/>}>
+    <Drawer.Navigator drawerContent={props => <SideMenu {...props} friendsList={friendsList} eventList={eventList} userData={userData} />}>
       <Drawer.Screen  name="Feed">
-        {props => <HomeScreen {...props} friendsList={friendsList} eventList={eventList} setEventList={setEventList}/>}
+        {props => <HomeScreen {...props} friendsList={friendsList} eventList={eventList} setEventList={setEventList} userData={userData} />}
       </Drawer.Screen>
     </Drawer.Navigator>
   );
@@ -52,11 +53,16 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen}/>
+          {/* <Stack.Screen name="Signup" component={LoginScreen}/> */}
           <Stack.Screen name="Map">
-            {props => <MyDrawer {...props} eventList={eventList} friendsList={friendsList} setEventList={setEventList}/>}
+            {props => <MyDrawer {...props} eventList={eventList} friendsList={friendsList} setEventList={setEventList} userData={props.route.params.userData}/>}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
 }
+
+
+
+// {props => console.log(props.route.params.userData)}
