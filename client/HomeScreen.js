@@ -8,8 +8,10 @@ import { DrawerActions } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 
 
-export default function HomeScreen({navigation, friendsList, eventList, setEventList}) {
-
+export default function HomeScreen({navigation, friendsList, eventList, setEventList, userData }) {
+  console.log(userData)
+  //const { userData } = route.params;
+  //console.log(userData)
   const [currentView, setCurrentView] = useState({latitude: 0, longitude: 0});
 
   const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
