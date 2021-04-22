@@ -20,7 +20,6 @@ import {localIP} from './config.js';
 const Drawer = createDrawerNavigator();
 
 function MyDrawer({friendsList, eventList, setEventList, userData}) {
-  console.log(userData);
   return (
     <Drawer.Navigator drawerContent={props => <SideMenu {...props} friendsList={friendsList} eventList={eventList} userData={userData} />}>
       <Drawer.Screen  name="Feed">
