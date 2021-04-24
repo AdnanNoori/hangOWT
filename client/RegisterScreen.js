@@ -8,10 +8,12 @@ const RegisterScreen = ({ navigation }) => {
   const [ password, setPassword ] = useState('');
 
   const navigateToLogin = () => {
-    if (username.length > 3 && password.length > 8) {
-      axios.get(`${localIP}/register/`, { username, password })
+    console.log('hello');
+    if (username.length > 3 && password.length > 7) {
+      axios.post(`${localIP}/register/`, { username, password })
       .then((userData) => {
-        navigation.navigate({ name: 'Map', params: {userData: userData.data }})
+        console.log(userData.data)
+        // navigation.navigate({ name: 'Map', params: {userData: userData.data }})
       })
       .catch((err) => {
         console.log(err);
