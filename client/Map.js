@@ -4,8 +4,8 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import EventModal from './EventModal.js';
 import RNLocation from 'react-native-location';
 
-const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress, addNewEvent, setPotentialEvent, friendsList, eventList }) => {
-
+const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress, addNewEvent, setPotentialEvent, friendsList, eventList, userData }) => {
+  console.log(userData);
   const [eventModalVisible, setEventModalVisible] = useState(false);
 
   return (
@@ -34,10 +34,10 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
           : null
         }
         {
-          eventList.map((event, index) => {
+          userData.events.map((event) => {
             return (
               <Marker
-                key={index}
+                key={event['_id']}
                 coordinate={event.coordinates}
               >
                 <Image
@@ -61,10 +61,10 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
         }
 
         {
-          friendsList.map((friend) => {
+          userData.friends.map((friend) => {
             return (
               <Marker
-                key={friend.id}
+                key={friend['_id']}
                 coordinate={friend.coordinates}
                 title={friend.title}
                 description={friend.status}
