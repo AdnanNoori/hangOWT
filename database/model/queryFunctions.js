@@ -4,16 +4,17 @@ const { User, Event } = require('./schema.js');
 module.exports = {
 
   register: async (req, res) => {
+    console.log('NONE')
     const { username, password } = req.body;
-
+    console.log(username, password);
     try {
       const userExists = await User.exists({ username });
 
       if (userExists) {
         res.send(409);
       } else {
-        await User.create({ username, password });
-        res.sendStatus(201)
+        const userData = await User.create({ username, password });
+        res.status(201).send({ "_id": userData['_id'], events: [], username: userData.username });
       }
     } catch(err) {
       console.log(err);
