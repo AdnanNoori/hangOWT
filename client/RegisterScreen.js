@@ -13,7 +13,7 @@ const RegisterScreen = ({ navigation }) => {
       axios.post(`${localIP}/register/`, { username, password })
       .then((userData) => {
         console.log(userData.data)
-        // navigation.navigate({ name: 'Map', params: {userData: userData.data }})
+        navigation.navigate({ name: 'Map', params: {userData: userData.data }})
       })
       .catch((err) => {
         console.log(err);
