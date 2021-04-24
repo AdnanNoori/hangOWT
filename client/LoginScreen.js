@@ -3,14 +3,13 @@ import { Button, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'rea
 import axios from 'axios';
 import {localIP} from '../config.js';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const loginUser = () => {
     axios.get(`${localIP}/login/`, { params: { username, password } })
       .then((userData) => {
-        console.log('in')
         navigation.navigate({ name: 'Map', params: {userData: userData.data }})
       })
       .catch((err) => {
@@ -40,7 +39,7 @@ const LoginScreen = ({navigation}) => {
         <Text style={styles.loginText}>Signup</Text>
       </TouchableOpacity> */}
       <Button title="LOGIN" onPress={loginUser}></Button>
-      <Button title="SIGNUP" onPress={() => navigation.navigate('Map')}></Button>
+      <Button title="SIGNUP" onPress={() => navigation.navigate('Register')}></Button>
     </View>
   )
 }
