@@ -14,6 +14,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from './client/HomeScreen.js';
 import SideMenu from './client/SideMenu.js';
 import LoginScreen from './client/LoginScreen.js';
+import RegisterScreen from './client/RegisterScreen.js';
 import axios from 'axios';
 import {localIP} from './config.js';
 
@@ -53,10 +54,11 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen}/>
-          {/* <Stack.Screen name="Signup" component={LoginScreen}/> */}
+          <Stack.Screen name="Register" component={RegisterScreen}></Stack.Screen>
           <Stack.Screen name="Map">
             {props => <MyDrawer {...props} eventList={eventList} friendsList={friendsList} setEventList={setEventList} userData={props.route.params.userData}/>}
           </Stack.Screen>
+
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
