@@ -9,9 +9,6 @@ import { Icon } from 'react-native-elements';
 
 
 export default function HomeScreen({navigation, friendsList, eventList, setEventList, userData }) {
-  console.log(userData)
-  //const { userData } = route.params;
-  //console.log(userData)
   const [currentView, setCurrentView] = useState({latitude: 0, longitude: 0});
 
   const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
@@ -54,6 +51,7 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         addNewEvent={addNewEvent}
         eventList={eventList}
         friendsList={friendsList}
+        userData={userData}
       />
       <View style={styles.resetButton}>
 

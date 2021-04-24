@@ -14,7 +14,7 @@ module.exports = {
         res.send(409);
       } else {
         const userData = await User.create({ username, password });
-        res.status(201).send({ "_id": userData['_id'], events: [], username: userData.username });
+        res.status(201).send({ "_id": userData['_id'], events: [], username: userData.username, friends: [], requestedFriendsList: [], pendingFriendsList: [] });
       }
     } catch(err) {
       console.log(err);
