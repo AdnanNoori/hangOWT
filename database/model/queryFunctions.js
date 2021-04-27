@@ -6,7 +6,6 @@ module.exports = {
   register: async (req, res) => {
 
     const { username, password } = req.body;
-    console.log(username, password);
     try {
       const userExists = await User.exists({ username });
 
@@ -58,7 +57,6 @@ module.exports = {
             .then((friends) => {
               userInfo.events = events;
               userInfo.friends = friends;
-              console.log({ ...userInfo, requestedFriendsList, pendingFriendsList })
               res.status(200).send({ ...userInfo, requestedFriendsList, pendingFriendsList });
             })
         })
@@ -66,6 +64,18 @@ module.exports = {
     } catch(err) {
       console.log(err);
       res.sendStatus(401);
+    }
+  },
+
+  setUserLocation: async (req, res) => {
+    const { userID, coordinates } = req.body;
+
+    try {
+      await User.findOneAndUpdate({_id: userID }, { coordinates });
+      res.sendStatus(200);
+    }catch(err) {
+      console.log(err);
+      res.sendStatus(404);
     }
   },
 
