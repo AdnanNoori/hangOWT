@@ -34,7 +34,7 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
           : null
         }
         {
-          userData.events.map((event) => {
+          eventList.map((event) => {
             return (
               <Marker
                 key={event['_id']}
@@ -61,7 +61,7 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
         }
 
         {
-          userData.friends.map((friend) => {
+          friendsList.map((friend) => {
             return (
               <Marker
                 key={friend['_id']}
