@@ -22,7 +22,6 @@ const GooglePlacesInput = ({ currentView, updateCurrentView, setPotentialEvent, 
               let position = geoCode.data.features[0].geometry.coordinates;
               updateCurrentView({latitude: position[1], longitude: position[0]});
               setPotentialEvent(true)
-              console.log('position', position);
             })
             .catch((err) => {
               console.log(err);
