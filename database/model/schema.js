@@ -3,8 +3,9 @@ const { mongoose } = require('../index.js');
 const userSchema = mongoose.Schema({
   username: String,
   password: String,
-  location: Object,
+  coordinates: {type: Object, default: [0,0]},
   status: String,
+  profilePicture: String,
   events: {type: Array, default: []},
   friends: {type: Object, default: {}} //0 pending, 1 requested, 2 accepted
 });
