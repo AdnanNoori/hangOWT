@@ -37,6 +37,7 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={setPassword}
         value={password}
+        secureTextEntry={true}
       />
       <Button title="REGISTER" onPress={navigateToLogin}></Button>
     </View>
