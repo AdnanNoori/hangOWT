@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend } = require('../database/model/queryFunctions.js');
+const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend, setUserLocation } = require('../database/model/queryFunctions.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -16,6 +16,8 @@ app.get('/userData', (req,res) => {
 app.post('/register', register);
 
 app.get('/login', login);
+
+app.post('/setUserLocation', setUserLocation);
 
 app.post('/createEvent', createEvent);
 
