@@ -25,12 +25,15 @@ const LoginScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={setUsername}
         value={username}
+        autoCapitalize='none'
       />
       <TextInput
         placeholder="Password..."
         style={styles.input}
         onChangeText={setPassword}
         value={password}
+        autoCapitalize='none'
+        secureTextEntry={true}
       />
       {/* <TouchableOpacity style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>

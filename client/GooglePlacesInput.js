@@ -20,7 +20,8 @@ const GooglePlacesInput = ({ currentView, updateCurrentView, setPotentialEvent, 
           axios.get(`https://nominatim.openstreetmap.org/search?q=${location}&format=geojson`)
             .then((geoCode) => {
               let position = geoCode.data.features[0].geometry.coordinates;
-              console.log(position);
+              updateCurrentView({latitude: position[1], longitude: position[0]});
+              setPotentialEvent(true)
             })
             .catch((err) => {
               console.log(err);

@@ -31,12 +31,15 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.input}
         onChangeText={setUsername}
         value={username}
+        autoCapitalize='none'
       />
       <TextInput
         placeholder="Password..."
         style={styles.input}
         onChangeText={setPassword}
         value={password}
+        secureTextEntry={true}
+        autoCapitalize='none'
       />
       <Button title="REGISTER" onPress={navigateToLogin}></Button>
     </View>

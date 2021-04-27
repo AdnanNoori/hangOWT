@@ -4,7 +4,7 @@ const { User, Event } = require('./schema.js');
 module.exports = {
 
   register: async (req, res) => {
-    console.log('NONE')
+
     const { username, password } = req.body;
     console.log(username, password);
     try {
