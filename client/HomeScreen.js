@@ -6,6 +6,8 @@ import Map from './Map.js';
 import { getUserLocation } from './helperFunctions/helperFunctions.js';
 import { DrawerActions } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
+import axios from 'axios';
+import {localIP} from '../config.js';
 
 
 export default function HomeScreen({navigation, friendsList, eventList, setEventList, userData }) {
@@ -16,8 +18,6 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
   const [potentialEvent, setPotentialEvent] = useState(false);
 
   const [potentialEventAddress, setPotentialEventAddress] = useState('');
-
-  // const [eventList, setEventList] = useState([]);
 
   const updateCurrentView = (location) => {
     setCurrentView({latitude: location.latitude, longitude: location.longitude});
@@ -37,6 +37,13 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
     getUserLocation((location) => {
       setUserLocation({latitude: location.coords.latitude, longitude: location.coords.longitude})
       updateCurrentView({latitude: location.coords.latitude, longitude: location.coords.longitude});
+      axios.post(`${localIP}/setUserLocation`, {userID: userData['_id'], coordinates: [location.coords.latitude, location.coords.longitude] })
+        .then((status) => {
+          console.log('User Location Updated', status.status);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
   }, [])
 
@@ -50,7 +57,7 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         setPotentialEvent={setPotentialEvent}
         addNewEvent={addNewEvent}
         eventList={eventList}
-        friendsList={friendsList}
+        friendsList={userData.friends}
         userData={userData}
       />
       <View style={styles.resetButton}>
