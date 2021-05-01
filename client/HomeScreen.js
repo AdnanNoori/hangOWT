@@ -30,7 +30,7 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
 
   const addNewEvent = (newEvent) => {
 
-    axios.post(`${localIP}/createEvent`, {event: newEvent})
+    axios.post(`${localIP}/createEvent`, { event: {...newEvent, id: userData['_id'] }})
       .then((status) => {
         console.log(status.status)
       })
