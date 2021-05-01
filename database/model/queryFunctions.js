@@ -29,8 +29,8 @@ module.exports = {
         .select({ password: 0 })
         .lean();
 
-      const eventsPromises = userInfo.events.map((event) => {
-        return Event.findOne({ _id: event })
+      const eventsPromises = Object.keys(userInfo.events).map((key) => {
+        return Event.findOne({ _id: userInfo.events[key] })
       });
       const friendList = [];
       const requestedFriendsList = [];
@@ -80,18 +80,26 @@ module.exports = {
   },
 
   createEvent: async (req, res) => {
-    const { location, address, date, title, inviteList } = req.body;
+    const { location, address, date, title, inviteList } = req.body.event;
 
     try {
 
       var eventID = mongoose.Types.ObjectId();
-      await Event.create({ _id: eventID, location, address, date, title, inviteList });
+      await Event.create({ '_id': eventID, location, address, date, title, inviteList });
 
-      const friendInvitePromises = inviteList.map((friend) => {
-        return User.update({ username: friend.username }, { $push: { events: eventId } });
+      const friendInvitePromises = Object.keys(inviteList).map((key) => {
+
+        return User.findOne({ '_id': key })
+          .then((userData) => {
+            console.log(userData);
+            userData.events[key] = { eventID };
+            userData.markModified('events');
+            userData.save();
+          })
+        //return User.updateOne({ '_id': key }, { $set: { eventString: eventID } });
       })
 
-      Promises.all(friendInvitePromises)
+      Promise.all(friendInvitePromises)
         .then(() => {
           res.sendStatus(200);
         })

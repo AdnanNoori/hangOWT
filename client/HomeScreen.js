@@ -29,6 +29,14 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
   }
 
   const addNewEvent = (newEvent) => {
+
+    axios.post(`${localIP}/createEvent`, {event: newEvent})
+      .then((status) => {
+        console.log(status.status)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     eventList.push(newEvent);
     setEventList(eventList);
   }
@@ -56,7 +64,7 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         potentialEventAddress={potentialEventAddress}
         setPotentialEvent={setPotentialEvent}
         addNewEvent={addNewEvent}
-        eventList={eventList}
+        eventList={userData.events}
         friendsList={userData.friends}
         userData={userData}
       />
