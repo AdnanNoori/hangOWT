@@ -28,25 +28,29 @@ module.exports = {
       const userInfo = await User.findOne({ username })
         .select({ password: 0 })
         .lean();
-
-      const eventsPromises = Object.keys(userInfo.events).map((key) => {
-        return Event.findOne({ _id: userInfo.events[key] })
-      });
+      if (userInfo.events) {
+        eventsPromises = Object.keys(userInfo.events).map((key) => {
+          return Event.findOne({ _id: userInfo.events[key] })
+        });
+      }
+      var eventsPromises = [];
+      var friendsPromises = [];
       const friendList = [];
       const requestedFriendsList = [];
       const pendingFriendsList = [];
+      if (userInfo.friends) {
+        Object.keys(userInfo.friends).forEach((friend) => {
+          if (userInfo.friends[friend] === 0) {
+            pendingFriendsList.push(friend);
+          } else if (userInfo.friends[friend] === 1) {
+            requestedFriendsList.push(friend);
+          } else if (userInfo.friends[friend] === 2) {
+            friendList.push(friend);
+          }
+        });
+      }
 
-      Object.keys(userInfo.friends).forEach((friend) => {
-        if (userInfo.friends[friend] === 0) {
-          pendingFriendsList.push(friend);
-        } else if (userInfo.friends[friend] === 1) {
-          requestedFriendsList.push(friend);
-        } else if (userInfo.friends[friend] === 2) {
-          friendList.push(friend);
-        }
-      });
-
-      const friendsPromises = friendList.map((friend) => {
+      friendsPromises = friendList.map((friend) => {
         return User.findOne({ username: friend })
           .select({ password: 0, friends: 0, events: 0});
       });
@@ -59,6 +63,12 @@ module.exports = {
               userInfo.friends = friends;
               res.status(200).send({ ...userInfo, requestedFriendsList, pendingFriendsList });
             })
+            .catch((err) => {
+              console.log(err);
+            })
+        })
+        .catch((err) => {
+          console.log(err);
         })
 
     } catch(err) {
@@ -80,24 +90,26 @@ module.exports = {
   },
 
   createEvent: async (req, res) => {
-    const { location, address, date, title, inviteList } = req.body.event;
+    const { id, location, address, date, title, inviteList } = req.body.event;
 
     try {
 
       var eventID = mongoose.Types.ObjectId();
       await Event.create({ '_id': eventID, location, address, date, title, inviteList });
+      var userData = await User.findOne({ '_id': id });
+      userData.events[eventID] = 0;
+      userData.markModified('events');
+      await userData.save();
 
       const friendInvitePromises = Object.keys(inviteList).map((key) => {
 
         return User.findOne({ '_id': key })
           .then((userData) => {
-            console.log(userData);
-            userData.events[key] = { eventID };
+            userData.events[eventID] = 0;
             userData.markModified('events');
             userData.save();
           })
-        //return User.updateOne({ '_id': key }, { $set: { eventString: eventID } });
-      })
+      });
 
       Promise.all(friendInvitePromises)
         .then(() => {
