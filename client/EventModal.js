@@ -12,11 +12,11 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
   const [eventInviteList, setEventInviteList] = useState({});
 
   updateEventList = (item) => {
-    if (eventInviteList[item.id]) {
-      delete eventInviteList[item.id];
+    if (eventInviteList[item['_id']]) {
+      delete eventInviteList[item['_id']];
       setEventInviteList(eventInviteList);
     } else {
-      eventInviteList[item.id] = item.title
+      eventInviteList[item['_id']] = item.username;
       setEventInviteList(eventInviteList);
     }
   }
@@ -61,7 +61,7 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
                 friendsList.map((item) => {
                   return <FriendItem
                     updateEventList={updateEventList}
-                    key={item.id}
+                    key={item['_id']}
                     item={item}
                   />
                 })
@@ -70,10 +70,10 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
             <Button title={'create'} onPress={() => {
                 addNewEvent({
                   title: eventTitle,
+                  location: currentView,
                   address: potentialEventAddress,
                   inviteList: eventInviteList,
-                  date: eventDate.toString(),
-                  coordinates: currentView
+                  date: eventDate.toString()
                 })
                 setEventModalVisible(!eventModalVisible);
                 onChangeEventTitle('');
