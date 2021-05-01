@@ -21,7 +21,7 @@ const FriendItem = ({item, updateEventList}) => {
         source={require('../assets/defaultUser.png')}
         style={{width: screenSize.width * .1, height: screenSize.height * .04, borderRadius: 50, marginRight: 20}}
       ></Image>
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title}>{item.username}</Text>
     </View>
   </Pressable>
   )
